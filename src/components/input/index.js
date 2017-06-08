@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Validator from "../../lib/validator/validator.js";
+import Validator from "../../lib/validator";
 
 export default class Input extends React.Component {
   constructor(props) {

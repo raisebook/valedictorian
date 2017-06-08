@@ -1,6 +1,6 @@
-import * as Validation from './lib/validator/validator.js';
-import Validator from './lib/validator/validator.js';
-import Components from './components/components.js';
+import * as Validation from './lib/validator';
+import Validator from './lib/validator';
+import Components from './components';
 
 export {
   Validation,

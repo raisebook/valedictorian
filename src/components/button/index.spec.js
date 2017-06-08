@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { mount , shallow } from 'enzyme';
 
-import Button from './button';
+import Button from './';
 
 describe('<Button>', () => {
   let enzymeWrapper = null;

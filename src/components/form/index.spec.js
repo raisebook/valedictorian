@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { shallow, } from 'enzyme';
 
-import Form from './form';
+import Form from './';
 
 describe('<Form>', () => {
   let enzymeWrapper = null;

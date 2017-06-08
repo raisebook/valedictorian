@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { shallow, mount } from 'enzyme';
 
-import Input from './input';
+import Input from './';
 
 describe('<Input>', () => {
   let enzymeWrapper = null;

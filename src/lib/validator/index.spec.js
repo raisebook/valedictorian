@@ -1,5 +1,5 @@
-import * as Validators from './validator';
-import Validator from './validator';
+import * as Validators from './';
+import Validator from './';
 
 describe("Validators", () => {
   let validate, obj, options, result;
