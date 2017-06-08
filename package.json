@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Another React validation library",
   "files": [ "build" ],
-  "main": "build/lib/validator/validator.js",
+  "main": "build",
   "repository": {
     "type": "git",
     "url": "https://github.com/raisebook/valedictorian"
