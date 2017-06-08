@@ -2,7 +2,8 @@
   "name": "valedictorian",
   "version": "1.0.0",
   "description": "Another React validation library",
-  "main": "build",
+  "files": [ "build" ],
+  "main": "build/lib/validator/validator.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/raisebook/valedictorian"
@@ -17,7 +18,7 @@
   "author": "Myles Eftos <myles@raisebook.com>",
   "license": "MIT",
   "scripts": {
-    "build": "babel src --out-dir build",
+    "build": "babel src --out-dir build --ignore spec.js",
     "clean": "rimraf build",
     "lint": "eslint ./",
     "test": "jest",
