@@ -42,9 +42,9 @@
     "sinon": "^2.3.2",
     "sinon-chai": "^2.10.0"
   },
-  "dependencies": {
-    "prop-types": "^15.5.10",
-    "react": "^15.5.4"
+  "peerDependencies": {
+    "prop-types": "^15.x",
+    "react": "^15.x"
   },
   "jest": {
     "setupTestFrameworkScriptFile": "<rootDir>/test/setup.js",
