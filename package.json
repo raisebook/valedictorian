@@ -1,8 +1,10 @@
 {
   "name": "valedictorian",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Another React validation library",
-  "files": [ "build" ],
+  "files": [
+    "build"
+  ],
   "main": "build",
   "repository": {
     "type": "git",
