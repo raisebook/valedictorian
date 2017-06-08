@@ -43,10 +43,7 @@
       "node_modules"
     ],
     "collectCoverageFrom": [
-      "**/*.{js}"
-    ],
-    "coveragePathIgnorePatterns": [
-      "<rootDir>/test/setup.js"
+      "src/**/*.{js}"
     ]
   }
 }
