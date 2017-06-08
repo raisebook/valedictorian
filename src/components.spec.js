@@ -1,5 +1,5 @@
-import Component from './';
-import { Button, Form, Input } from './';
+import Component from './components';
+import { Button, Form, Input } from './components';
 
 describe("exports", () => {
   describe("default export", () => {

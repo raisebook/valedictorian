@@ -1,6 +1,6 @@
 {
   "name": "valedictorian",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Another React validation library",
   "files": [
     "build"
