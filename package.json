@@ -2,12 +2,23 @@
   "name": "valedictorian",
   "version": "1.0.0",
   "description": "Another React validation library",
-  "main": "index.js",
-  "repository": "https://github.com/raisebook/valedictorian",
+  "main": "build",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/raisebook/valedictorian"
+  },
+  "keywords": [
+    "javsacript",
+    "reactjs",
+    "react",
+    "forms",
+    "validation"
+  ],
   "author": "Myles Eftos <myles@raisebook.com>",
   "license": "MIT",
   "scripts": {
-    "build": "",
+    "build": "babel src --out-dir build",
+    "clean": "rimraf build",
     "lint": "eslint ./",
     "test": "jest",
     "test:coverage": "jest --coverage",
@@ -27,6 +38,7 @@
     "jest": "^20.0.4",
     "react-addons-test-utils": "^15.5.1",
     "react-dom": "^15.5.4",
+    "rimraf": "^2.6.1",
     "sinon": "^2.3.2",
     "sinon-chai": "^2.10.0"
   },
