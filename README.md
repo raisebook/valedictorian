@@ -27,7 +27,7 @@ class App extends React.Component {
     return (
       <Form className={styles.container}>
         <label for="name">Name</label>
-        <Input id="name" type="text" placeholder="Name" validators={[ Validator.required() ]} />
+        <Input id="name" type="text" placeholder="Name" validators={[ Validation.required() ]} />
         <Button className={styles.button}>Save</Button>
       </Form>
     );
@@ -65,7 +65,7 @@ allowEmpty: (true|false) If true, the validator will not run on empty inputs.
 #### Example
 
 ```
-<Input id="name" type="text" placeholder="Name" validators={[ Validator.format(/[a-z]+) ]} />
+<Input id="name" type="text" placeholder="Name" validators={[ Validator.format(/[a-z]+/) ]} />
 ```
 
 ### Validation.min(min, [options])
