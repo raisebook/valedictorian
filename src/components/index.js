@@ -1,6 +1,6 @@
-import Button from './components/button';
-import Form from './components/form';
-import Input from './components/input';
+import Button from './button';
+import Form from './form';
+import Input from './input';
 
 export {
   Button,
