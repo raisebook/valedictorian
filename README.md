@@ -6,7 +6,7 @@ Valedictorian is a React validation library where the validation logic is held c
 There is a number of build in validation types, and it is easy to add extra ones.
 
 ### Installation
-```
+```bash
 yarn add valedictorian
 ```
 
@@ -16,7 +16,7 @@ There are three predefined React components that you can use to build your forms
 
 Input: Outputs an input field. Takes all the props a normal input can, as well
 
-```
+```javascript
 import React from "react";
 
 import { Validation } from "valedictorian";
@@ -49,7 +49,7 @@ message: A custom message to set when validation fails
 
 #### Example
 
-```
+```javascript
 <Input id="name" type="text" placeholder="Name" validators={[ Validator.required() ]} />
 ```
 
@@ -64,7 +64,7 @@ allowEmpty: (true|false) If true, the validator will not run on empty inputs.
 
 #### Example
 
-```
+```javascript
 <Input id="name" type="text" placeholder="Name" validators={[ Validator.format(/[a-z]+/) ]} />
 ```
 
@@ -78,7 +78,7 @@ message: A custom message to set when validation fails. Use ${min} to substitute
 
 #### Example
 
-```
+```javascript
 <Input id="name" type="text" placeholder="Name" validators={[ Validator.min(5) ]} />
 ```
 
@@ -92,7 +92,7 @@ message: A custom message to set when validation fails. Use ${max} to substitute
 
 #### Example
 
-```
+```javascript
 <Input id="name" type="text" placeholder="Name" validators={[ Validator.max(5) ]} />
 ```
 
@@ -105,7 +105,7 @@ If validation fails, set the valid attribute to false, and push an error message
 
 #### Example
 
-```
+```javascript
 function matchesText(text) {
   return function(obj) {
     if(obj !== text) {
