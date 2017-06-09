@@ -1,6 +1,6 @@
 {
   "name": "valedictorian",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Another React validation library",
   "main": "index.js",
   "repository": {
