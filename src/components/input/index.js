@@ -8,10 +8,11 @@ export default class Input extends React.Component {
     this.validator = new Validator(this.props.validators || []);
 
     let initial = this.props.initial || "";
+    let value = this.props.value || "";
 
     this.state = this.validator.validate({
-      changed: this.props.value !== initial,
-      value: this.props.value,
+      changed: value !== initial,
+      value: value,
       initial: initial
     });
   }
@@ -72,6 +73,7 @@ export default class Input extends React.Component {
     });
 
     delete props["validators"];
+    delete props["initial"];
 
     return (
       <input {...props} />
