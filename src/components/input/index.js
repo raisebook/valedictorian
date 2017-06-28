@@ -55,6 +55,10 @@ export default class Input extends React.Component {
     return this.validator.validate(this.state).valid;
   }
 
+  errors() {
+    return this.validator.validate(this.state).errors;
+  }
+
   update() {
     let context = this;
 

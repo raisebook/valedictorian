@@ -13,25 +13,76 @@ describe('<Form>', () => {
     describe("register", () => {
       let form, subject, component;
 
-      beforeEach(() => {
-        form = new Form();
-        subject = form.getChildContext().validation.register;
-        subject(component);
+      describe("without key", () => {
+        beforeEach(() => {
+          form = new Form();
+          subject = form.getChildContext().validation.register;
+          component = {};
+          subject(component);
+        });
+
+        it("add the component to the list", () => {
+          expect(Object.values(form.components).indexOf(component)).to.equal(0);
+        });
+
+        it("creates a fake key", () => {
+          expect(Object.keys(form.components)[0]).to.equal("_key_0");
+        });
+
+        it("Only add the component once ", () => {
+          subject(component);
+          expect(Object.values(form.components).length).to.equal(1);
+        });
+
+        describe("unregister", () => {
+          it("removes the component from the list", () => {
+            form.getChildContext().validation.unregister(component);
+            expect(Object.values(form.components).indexOf(component)).to.equal(-1);
+          });
+        });
       });
 
-      it("Adds the component to the list", () => {
-        expect(form.components.indexOf(component)).to.equal(0)
-      });
+      describe("with key", () => {
+        beforeEach(() => {
+          form = new Form();
+          subject = form.getChildContext().validation.register;
+          component = {
+            props: {
+              key: 'component'
+            }
+          };
+          subject(component);
+        });
 
-      it("Only add the compoment once ", () => {
-        subject(component);
-        expect(form.components.length).to.equal(1);
-      });
+        it("Adds the component to the list", () => {
+          expect(Object.values(form.components).indexOf(component)).to.equal(0);
+        });
 
-      describe("unregister", () => {
-        it("removes the component from the list", () => {
-          form.getChildContext().validation.unregister(component);
-          expect(form.components.length).to.equal(0);
+        it("Is referencable by the key", () => {
+          expect(form.components['component']).to.equal(component);
+        });
+
+        it("Only add the component once ", () => {
+          let otherComponet = {
+            props: {
+              key: 'component'
+            }
+          };
+
+          subject(otherComponet);
+          expect(form.components['component']).to.equal(component);
+        });
+
+        describe("with a key", () => {
+          it("removes the component from the list", () => {
+            form.getChildContext().validation.unregister(component);
+            expect(Object.values(form.components).indexOf(component)).to.equal(-1);
+          });
+
+          it("removes the key from the list", () => {
+            form.getChildContext().validation.unregister(component);
+            expect(Object.keys(form.components).indexOf('component')).to.equal(-1);
+          });
         });
       });
     });
@@ -98,6 +149,57 @@ describe('<Form>', () => {
         let form = new Form();
         form.state.valid = true;
         expect(form.getChildContext().validation.valid()).to.equal(true)
+      });
+    });
+
+    describe("componentValid", () => {
+      let form, component;
+      describe("component does not exist", () => {
+        it("raises an error");
+      });
+
+      describe("Component exists", () => {
+        beforeEach(() => {
+          component = {
+            props: {
+              key: 'component'
+            }
+          }
+        });
+
+        describe("and is valid", () => {
+          beforeEach(() => {
+            component.valid = () => { return true; }
+            component.errors = () => { return null }
+            form = new Form();
+            form.getChildContext().validation.register(component);
+          });
+
+          it("returns true", () => {
+            expect(form.getChildContext().validation.componentValid('component').valid).to.eq(true);
+          });
+
+          it("returns an empty error set", () => {
+            expect(form.getChildContext().validation.componentValid('component').errors).to.eq(null);
+          });
+        });
+
+        describe("and is not valid", () => {
+          beforeEach(() => {
+            component.valid = () => { return false; };
+            component.errors = () => { return [ 'invalid' ] }
+            form = new Form();
+            form.getChildContext().validation.register(component);
+          });
+
+          it("returns false", () => {
+            expect(form.getChildContext().validation.componentValid('component').valid).to.eq(false);
+          });
+
+          it("returns an error set", () => {
+            expect(form.getChildContext().validation.componentValid('component').errors).to.deep.eq([ 'invalid' ]);
+          });
+        });
       });
     });
   });
