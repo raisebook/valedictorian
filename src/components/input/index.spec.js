@@ -133,33 +133,6 @@ describe('<Input>', () => {
     });
   });
 
-  describe("errors", () => {
-    let validator, state;
-
-    beforeEach(() => {
-      component = new Input({});
-
-      validator = sinon.stub(component.validator, 'validate');
-      validator.returns({ errors: [ 'invalid' ] });
-
-      state = sinon.stub();
-      component.state = state;
-    });
-
-    afterEach(() => {
-      validator.restore();
-    });
-
-    it("returns whether the component's error list", () => {
-      expect(component.errors()).to.deep.equal( [ 'invalid' ] );
-    });
-
-    it("called validate on the validator object", () => {
-      component.errors();
-      expect(validator).to.have.been.calledWith(state);
-    });
-  });
-
   describe("update", () => {
     beforeEach(() => {
       component = new Input({});
