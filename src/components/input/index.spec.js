@@ -103,19 +103,20 @@ describe('<Input>', () => {
   });
 
   describe("validate", () => {
-
-  });
-
-  describe("valid", () => {
     let validator, state;
 
     beforeEach(() => {
       component = new Input({});
+      component.context = {};
 
       validator = sinon.stub(component.validator, 'validate');
-      validator.returns({ valid: false });
+      validator.returns({
+        valid: false,
+        errors: [ 'invalid' ],
+        changed: true
+      });
 
-      state = sinon.stub();
+      state = {};
       component.state = state;
     });
 
@@ -124,39 +125,25 @@ describe('<Input>', () => {
     });
 
     it("returns whether the component is valid or not", () => {
-      expect(component.valid()).to.equal(false);
+      expect(component.validate().valid).to.equal(false);
+    });
+
+    it("returns the components errors", () => {
+      expect(component.validate().errors).to.deep.equal([ 'invalid' ]);
+    });
+
+    it("returns the components changed state", () => {
+      expect(component.validate().changed).to.equal(true);
     });
 
     it("called validate on the validator object", () => {
-      component.valid();
+      component.validate();
       expect(validator).to.have.been.calledWith(state);
     });
-  });
 
-  describe("errors", () => {
-    let validator, state;
-
-    beforeEach(() => {
-      component = new Input({});
-
-      validator = sinon.stub(component.validator, 'validate');
-      validator.returns({ errors: [ 'invalid' ] });
-
-      state = sinon.stub();
-      component.state = state;
-    });
-
-    afterEach(() => {
-      validator.restore();
-    });
-
-    it("returns whether the component's error list", () => {
-      expect(component.errors()).to.deep.equal( [ 'invalid' ] );
-    });
-
-    it("called validate on the validator object", () => {
-      component.errors();
-      expect(validator).to.have.been.calledWith(state);
+    it("called validate on the validator object with a merged state", () => {
+      component.validate({ foo: 'bar' });
+      expect(validator).to.have.been.calledWith({ foo: 'bar' });
     });
   });
 

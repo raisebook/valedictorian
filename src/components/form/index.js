@@ -40,7 +40,7 @@ export default class Form extends React.Component {
 
         hasValidated: (() => {
           this.setState({
-            valid: Object.values(this.components).reduce((acc, component) => { return acc && component.valid(); }, true)
+            valid: Object.values(this.components).reduce((acc, component) => { return acc && component.validate().valid; }, true)
           });
         }),
 
@@ -54,11 +54,7 @@ export default class Form extends React.Component {
           if(typeof(component) === "undefined") {
             throw new Error(`Component "${key}" was not found. Make sure the component you are targeting has a "key" prop set.`);
           } else {
-
-            return {
-              valid: component.valid(),
-              errors: component.errors()
-            }
+            return component.validate();
           }
         })
       }

@@ -91,14 +91,22 @@ describe('<Form>', () => {
       let form, setStateStub, validators = [];
 
       let valid = {
-        valid: () => {
-          return true;
+        validate: () => {
+          return {
+            valid: true,
+            errors: null,
+            changed: false
+          }
         }
       };
 
       let invalid = {
-        valid: () => {
-          return false;
+        validate: () => {
+          return {
+            valid: false,
+            errors: [ 'invalid' ],
+            changed: true
+          }
         }
       };
 
@@ -169,8 +177,13 @@ describe('<Form>', () => {
 
         describe("and is valid", () => {
           beforeEach(() => {
-            component.valid = () => { return true; }
-            component.errors = () => { return null }
+            component.validate = () => {
+              return {
+                valid: true,
+                errors: null,
+                changed: false
+              }
+            }
             form = new Form();
             form.getChildContext().validation.register(component);
           });
@@ -186,8 +199,13 @@ describe('<Form>', () => {
 
         describe("and is not valid", () => {
           beforeEach(() => {
-            component.valid = () => { return false; };
-            component.errors = () => { return [ 'invalid' ] }
+            component.validate = () => {
+              return {
+                valid: false,
+                errors: [ 'invalid' ],
+                changed: true
+              }
+            }
             form = new Form();
             form.getChildContext().validation.register(component);
           });
