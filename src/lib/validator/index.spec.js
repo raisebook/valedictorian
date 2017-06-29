@@ -8,61 +8,22 @@ describe("Validators", () => {
     return validate(obj);
   };
 
-  function isAValidator(setup, passVal, failVal) {
+  function isAValidator(validator) {
     describe("if guard", () => {
-      it("runs if if guard is true", () => {
-        expect(setup({ if: () => true })(failVal).valid).to.equal(false);
-      });
-
-      it("does not runs if if guard is false", () => {
-        expect(setup({ if: () => false })(failVal).valid).to.equal(true);
-      });
+      it("runs if if guard is true");
+      it("does not runs if if guard is false");
     });
 
     describe("unless guard", () => {
-      it("runs if unless guard is false", () => {
-        expect(setup({ unless: () => false })(failVal).valid).to.equal(false);
-      });
-
-      it("does not runs if unless guard is true", () => {
-        expect(setup({ unless: () => true })(failVal).valid).to.equal(true);
-      });
-    });
-
-    describe("beenValid", () => {
-      it("sets beenValid to true if it first evals to false", () => {
-        let validator = setup();
-        let obj = validator(failVal);
-        expect(obj.beenValid).to.equal(false);
-      });
-
-      it("sets beenValid to true if it evals to true", () => {
-        let validator = setup();
-        let obj = validator(failVal);
-        expect(obj.beenValid).to.equal(false);
-        obj = validator(Object.assign({}, obj, passVal));
-        expect(obj.beenValid).to.equal(true);
-      });
-
-      it("does not set beenValid to false if it re-evals to false", () => {
-         let validator = setup();
-        let obj = validator(failVal);
-        expect(obj.beenValid).to.equal(false);
-        obj = validator(Object.assign({}, obj, passVal));
-        expect(obj.beenValid).to.equal(true);
-        obj = validator(Object.assign({}, obj, failVal));
-         expect(obj.beenValid).to.equal(true);
-      });
+      it("runs if unless guard is false");
+      it("does not runs if unless guard is true");
     });
   }
 
   describe("required", () => {
     beforeEach(() => { validate = Validators.required(); });
-    isAValidator(
-      (options) => Validators.required(options),
-      { value: 'not empty', valid: true, errors: [] },
-      { value: '', valid: true, errors: [] }
-    );
+
+    isAValidator(validate);
 
     describe("empty", () => {
       beforeEach(() => { obj = { value: '', valid: true, errors: [] }; });
@@ -126,11 +87,7 @@ describe("Validators", () => {
   describe("format", () => {
     beforeEach(() => { validate = Validators.format(/[a-z]+/); });
 
-    isAValidator(
-      (options) => Validators.format(/[a-z]+/, options),
-      { value: 'abc', valid: true, errors: [] },
-      { value: '123', valid: true, errors: [] }
-    );
+    isAValidator(validate);
 
     describe("empty", () => {
       describe("allowEmpty is true", () => {
@@ -213,11 +170,7 @@ describe("Validators", () => {
   describe("length", () => {
     beforeEach(() => { validate = Validators.length(5); });
 
-    isAValidator(
-      (options) => Validators.length(5, options),
-      { value: 'aaaaa', valid: true, errors: [] },
-      { value: 'aaaaaa', valid: true, errors: [] }
-    );
+    isAValidator(validate);
 
     describe("bigger than length", () => {
       beforeEach(() => { obj = { value: 'aaaaaa', valid: true, errors: [] }; });
@@ -281,11 +234,7 @@ describe("Validators", () => {
   describe("min", () => {
     beforeEach(() => { validate = Validators.min(5); });
 
-    isAValidator(
-      (options) => Validators.min(5, options),
-      { value: '5', valid: true, errors: [] },
-      { value: '4', valid: true, errors: [] }
-    );
+    isAValidator(validate);
 
     describe("empty", () => {
       describe("allowEmpty is true", () => {
@@ -401,11 +350,7 @@ describe("Validators", () => {
   describe("max", () => {
     beforeEach(() => { validate = Validators.max(5); });
 
-    isAValidator(
-      (options) => Validators.max(5, options),
-      { value: '5', valid: true, errors: [] },
-      { value: '6', valid: true, errors: [] }
-    );
+    isAValidator(validate);
 
     describe("empty", () => {
       describe("allowEmpty is true", () => {

@@ -13,19 +13,10 @@ function validate(body, options = {}) {
 
     // Clean up the value, as pretty much every validator expects a trimmed input
     obj = Object.assign({}, obj, {
-      value: (obj.value + "").trim(),
+      value: (obj.value + "").trim()
     });
 
-    if(typeof(obj.beenValid) == "undefined") {
-      obj.beenValid = false;
-    }
-
-    let ret = body(obj);
-
-    if(ret.valid) {
-      ret.beenValid = true;
-    }
-    return ret;
+    return body(obj);
   };
 }
 

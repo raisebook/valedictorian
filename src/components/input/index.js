@@ -11,7 +11,6 @@ export default class Input extends React.Component {
     let value = this.props.value || "";
 
     this.state = this.validator.validate({
-      beenValid: false,
       changed: value !== initial,
       value: value,
       initial: initial
@@ -34,7 +33,7 @@ export default class Input extends React.Component {
     }
   }
 
-  validate(state = {}) {
+  validate(state) {
     let newState = this.validator.validate(Object.assign({}, this.state, state));
 
     if(this.context.validation) {
@@ -45,10 +44,19 @@ export default class Input extends React.Component {
     }
 
     if(this.props.onValidate) {
-      this.props.onValidate(newState);
+      this.props.onValidate({
+        valid: newState.valid,
+        error: newState.error
+      });
     }
+  }
 
-    return newState;
+  valid() {
+    return this.validator.validate(this.state).valid;
+  }
+
+  errors() {
+    return this.validator.validate(this.state).errors;
   }
 
   update() {

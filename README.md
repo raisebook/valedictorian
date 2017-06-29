@@ -37,34 +37,6 @@ class App extends React.Component {
 
 In this instance, the button will be disabled until the user enters a value.
 
-## Displaying an inline error
-
-By using the InlineError component, you can display errors next to inputs. The error is only displayed if the input field has at some point been valid, and has become invalid.
-
-You associate the error with an input by defining a key attribute on the INput, and using the for attribute on the InlineError.
-
-Any props are passed through to the underlying span to allow for styling.
-
-```javascript
-import React from "react";
-
-import { Validation } from "valedictorian";
-import { Input, Button, Form, InlineError } from "valedictorian/components";
-
-class App extends React.Component {
-  render() {
-    return (
-      <Form className={styles.container}>
-        <label for="name">Name</label>
-        <InlineError for="name" />
-        <Input id="name" key="name" type="text" placeholder="Name" validators={[ Validation.required() ]} />
-        <Button className={styles.button}>Save</Button>
-      </Form>
-    );
-  }
-}
-```
-
 ## Validation types
 
 ### Validation.required([options])
