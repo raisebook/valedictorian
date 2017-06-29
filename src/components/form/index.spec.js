@@ -17,7 +17,9 @@ describe('<Form>', () => {
         beforeEach(() => {
           form = new Form();
           subject = form.getChildContext().validation.register;
-          component = {};
+          component = {
+            validate: () => {}
+          };
           subject(component);
         });
 
@@ -46,7 +48,9 @@ describe('<Form>', () => {
         beforeEach(() => {
           form = new Form();
           subject = form.getChildContext().validation.register;
-          component = {};
+          component = {
+            validate: () => {}
+          };
           subject(component, 'component');
         });
 
@@ -60,9 +64,7 @@ describe('<Form>', () => {
 
         it("Only add the component once ", () => {
           let otherComponet = {
-            props: {
-              key: 'component'
-            }
+            validate: () => {}
           };
 
           subject(otherComponet);
@@ -121,7 +123,7 @@ describe('<Form>', () => {
         });
 
         it("sets the valid state to true", () => {
-          expect(setStateStub).to.have.been.calledWith({ valid: true });
+          expect(setStateStub).to.have.been.calledWith(sinon.match({ valid: true }));
         });
       });
 
@@ -132,7 +134,7 @@ describe('<Form>', () => {
         });
 
         it("sets the valid state to true", () => {
-          expect(setStateStub).to.have.been.calledWith({ valid: true });
+          expect(setStateStub).to.have.been.calledWith(sinon.match({ valid: true }));
         });
       });
 
@@ -143,7 +145,7 @@ describe('<Form>', () => {
         });
 
         it("sets the valid state to true", () => {
-         expect(setStateStub).to.have.been.calledWith({ valid: false });
+         expect(setStateStub).to.have.been.calledWith(sinon.match({ valid: false }));
         });
       });
     });

@@ -57,7 +57,7 @@ class App extends React.Component {
       <Form className={styles.container}>
         <label for="name">Name</label>
         <InlineError for="name" />
-        <Input name="name" type="text" placeholder="Name" validators={[ Validation.required() ]} />
+        <Input id="name" name="name" type="text" placeholder="Name" validators={[ Validation.required() ]} />
         <Button className={styles.button}>Save</Button>
       </Form>
     );
