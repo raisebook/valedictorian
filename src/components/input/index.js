@@ -46,7 +46,7 @@ export default class Input extends React.Component {
     if(this.props.onValidate) {
       this.props.onValidate({
         valid: newState.valid,
-        error: newState.error
+        errors: newState.errors
       });
     }
   }
