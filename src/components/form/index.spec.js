@@ -46,8 +46,12 @@ describe('<Form>', () => {
         beforeEach(() => {
           form = new Form();
           subject = form.getChildContext().validation.register;
-          component = {};
-          subject(component, 'component');
+          component = {
+            props: {
+              key: 'component'
+            }
+          };
+          subject(component);
         });
 
         it("Adds the component to the list", () => {
@@ -164,7 +168,11 @@ describe('<Form>', () => {
 
       describe("Component exists", () => {
         beforeEach(() => {
-          component = {}
+          component = {
+            props: {
+              key: 'component'
+            }
+          }
         });
 
         describe("and is valid", () => {
@@ -177,7 +185,7 @@ describe('<Form>', () => {
               }
             }
             form = new Form();
-            form.getChildContext().validation.register(component, 'component');
+            form.getChildContext().validation.register(component);
           });
 
           it("returns true", () => {
@@ -199,7 +207,7 @@ describe('<Form>', () => {
               }
             }
             form = new Form();
-            form.getChildContext().validation.register(component, 'component');
+            form.getChildContext().validation.register(component);
           });
 
           it("returns false", () => {

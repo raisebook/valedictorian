@@ -88,12 +88,6 @@ describe('<Input>', () => {
         expect(context.validation.register).to.have.been.calledWith(component);
       });
 
-      it("registers a key name if set", () => {
-        enzymeWrapper = mount(<Input name="component" />, { context: context });
-        component = enzymeWrapper.instance();
-        expect(context.validation.register).to.have.been.calledWith(component, "component");
-      });
-
       it("unregisters itself on unmount", () => {
         enzymeWrapper.unmount();
         expect(context.validation.unregister).to.have.been.calledWith(component);
