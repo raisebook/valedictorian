@@ -6,8 +6,7 @@ export default class Form extends React.Component {
     super(props);
     this.components = {};
     this.state = {
-      valid: false,
-      components: {}
+      valid: false
     };
   }
 
@@ -26,7 +25,6 @@ export default class Form extends React.Component {
 
           if(typeof(this.components[key]) === "undefined") {
             this.components[key] = component;
-            this.state.components[key] = component.validate();
           }
         }),
 
@@ -40,14 +38,8 @@ export default class Form extends React.Component {
         }),
 
         hasValidated: (() => {
-          let components = {};
-          Object.keys(this.components).forEach((key) => {
-            components[key] = this.components[key].validate();
-          });
-
           this.setState({
-            components: components,
-            valid: Object.values(components).reduce((acc, component) => { return acc && component.valid; }, true)
+            valid: Object.values(this.components).reduce((acc, component) => { return acc && component.validate().valid; }, true)
           });
         }),
 
@@ -56,12 +48,12 @@ export default class Form extends React.Component {
         }),
 
         componentValid: ((key) => {
-          let validatity = this.state.components[key];
+          let component = this.components[key];
 
-          if(typeof(validatity) === "undefined") {
-            throw new Error(`Component "${key}" was not found. Make sure the component you are targeting has a "name" prop set.`);
+          if(typeof(component) === "undefined") {
+            throw new Error(`Component "${key}" was not found. Make sure the component you are targeting has a "key" prop set.`);
           } else {
-            return validatity;
+            return component.validate();
           }
         })
       }
