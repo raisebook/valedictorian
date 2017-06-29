@@ -13,15 +13,14 @@ export default class Form extends React.Component {
   getChildContext() {
     return {
       validation: {
-        register: ((component) => {
+        register: ((component, key = null) => {
 
           if(Object.values(this.components).indexOf(component) != -1) {
             return;
           }
 
-          let key = `_key_${Object.keys(this.components).length}`;
-          if(typeof(component.props) != "undefined" && typeof(component.props.key) == "string") {
-            key = component.props.key;
+          if(typeof(key) !== "string") {
+            key = `_key_${Object.keys(this.components).length}`;
           }
 
           if(typeof(this.components[key]) === "undefined") {

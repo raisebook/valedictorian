@@ -20,7 +20,11 @@ export default class Input extends React.Component {
 
   componentWillMount() {
     if(this.context.validation) {
-      this.context.validation.register(this);
+      if(this.props.name) {
+        this.context.validation.register(this, this.props.name);
+      } else {
+        this.context.validation.register(this);
+      }
     }
   }
 
