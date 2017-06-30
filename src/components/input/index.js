@@ -39,7 +39,7 @@ export default class Input extends React.Component {
     if(this.context.validation) {
       this.setState(newState, () => {
         // Wait for the state to update, then notify the form context
-        this.context.validation.hasValidated();
+        this.context.validation.hasValidated(this);
       });
     }
 

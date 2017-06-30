@@ -16,7 +16,17 @@ function validate(body, options = {}) {
       value: (obj.value + "").trim()
     });
 
-    return body(obj);
+    if(typeof(obj.beenValid) == "undefined") {
+      obj.beenValid = false;
+    }
+
+    let ret = body(obj);
+
+    if(ret.valid) {
+      ret.beenValid = true;
+    }
+
+    return ret;
   };
 }
 
