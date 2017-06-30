@@ -16,7 +16,17 @@ function validate(body, options = {}) {
       value: (obj.value + "").trim()
     });
 
-    return body(obj);
+    if(typeof(obj.beenValid) == "undefined") {
+      obj.beenValid = false;
+    }
+
+    let ret = body(obj);
+
+    if(ret.valid) {
+      ret.beenValid = true;
+    }
+
+    return ret;
   };
 }
 
@@ -56,14 +66,28 @@ export function format(regexp, options = {}) {
 }
 
 export function length(len, options = {}) {
+  let min = null;
+  let max = null;
+
+  if(typeof(len) === "object") {
+    min = len.min;
+    max = len.max;
+  } else {
+    max = len;
+  }
+
   options = Object.assign({}, {
-    message: "is too long (Max is ${len})"
+    minMessage: "is too short (Min is ${min})",
+    maxMessage: "is too long (Max is ${max})"
   }, options);
 
   return validate(function(obj) {
-    if(obj.value.length > len) {
+    if(max && obj.value.length > max) {
       obj.valid = false;
-      obj.errors.push(options.message.replace(/\${len}/, len));
+      obj.errors.push(options.maxMessage.replace(/\${len}|\${max}/, max));
+    } else if(min && obj.value.length < min) {
+      obj.valid = false;
+      obj.errors.push(options.minMessage.replace(/\${min}/, min));
     }
 
     return obj;

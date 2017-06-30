@@ -68,6 +68,23 @@ allowEmpty: (true|false) If true, the validator will not run on empty inputs.
 <Input id="name" type="text" placeholder="Name" validators={[ Validator.format(/[a-z]+/) ]} />
 ```
 
+### Validation.length(len, [options])
+
+Validates true if the length of the string is greater than min and less than max
+
+#### Options:
+
+minMessage: A custom message to set when the character count is less than min. Use ${min} to substitute the minimum value in the message.
+maxMessage: A custom message to set when the character count is greater than max. Use ${max} to substitube the max value in the message.
+
+#### Example
+
+```javascript
+<Input id="name" type="text" placeholder="Name" validators={[ Validator.length({ min: 5 }) ]} />
+<Input id="name" type="text" placeholder="Name" validators={[ Validator.length({ max: 5 }) ]} />
+<Input id="name" type="text" placeholder="Name" validators={[ Validator.length({ min: 3, max: 5 }) ]} />
+```
+
 ### Validation.min(min, [options])
 
 Validates true if the number representation of the input is greater than or equal to min
