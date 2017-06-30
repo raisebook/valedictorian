@@ -220,6 +220,108 @@ describe("Validators", () => {
       { value: 'aaaaaa', valid: true, errors: [] }
     );
 
+    describe("len as object", () => {
+      describe("max", () => {
+        beforeEach(() => { validate = Validators.length({ max: 5 }); });
+
+        describe("bigger than length", () => {
+          beforeEach(() => { obj = { value: 'aaaaaa', valid: true, errors: [] }; });
+
+          it("evaluates to not valid", () => {
+            expect(subject().valid).to.equal(false);
+          });
+
+          describe("default message", () => {
+            it("sets error message to 'is too long (Max is 5)'", () => {
+              expect(subject().errors).to.deep.equal([ "is too long (Max is 5)" ]);
+            });
+          });
+
+          describe("custom message", () => {
+            beforeEach(() => { validate = Validators.length({ max: 5 }, { maxMessage: "less than ${max} please" }); });
+
+            it("sets error message to the custom message", () => {
+              expect(subject().errors).to.deep.equal([ "less than 5 please" ]);
+            });
+          });
+        });
+      });
+
+      describe("min", () => {
+        beforeEach(() => { validate = Validators.length({ min: 5 }); });
+
+        describe("smaller than length", () => {
+          beforeEach(() => { obj = { value: 'aaaa', valid: true, errors: [] }; });
+
+          it("evaluates to not valid", () => {
+            expect(subject().valid).to.equal(false);
+          });
+
+          describe("default message", () => {
+            it("sets error message to 'is too short (Min is 5)'", () => {
+              expect(subject().errors).to.deep.equal([ "is too short (Min is 5)" ]);
+            });
+          });
+
+          describe("custom message", () => {
+            beforeEach(() => { validate = Validators.length({ min: 5 }, { minMessage: "more than ${min} please" }); });
+
+            it("sets error message to the custom message", () => {
+              expect(subject().errors).to.deep.equal([ "more than 5 please" ]);
+            });
+          });
+        });
+      });
+
+      describe("min and max", () => {
+        beforeEach(() => { validate = Validators.length({ min: 3, max: 5 }); });
+
+        describe("smaller than min", () => {
+          beforeEach(() => { obj = { value: 'aa', valid: true, errors: [] }; });
+
+          it("evaluates to not valid", () => {
+            expect(subject().valid).to.equal(false);
+          });
+
+          describe("default message", () => {
+            it("sets error message to 'is too short (Min is 3)'", () => {
+              expect(subject().errors).to.deep.equal([ "is too short (Min is 3)" ]);
+            });
+          });
+
+          describe("custom message", () => {
+            beforeEach(() => { validate = Validators.length({ min: 3, max: 5 } , { minMessage: "more than ${min} please" }); });
+
+            it("sets error message to the custom message", () => {
+              expect(subject().errors).to.deep.equal([ "more than 3 please" ]);
+            });
+          });
+        });
+
+        describe("larger than max", () => {
+          beforeEach(() => { obj = { value: 'aaaaaa', valid: true, errors: [] }; });
+
+          it("evaluates to not valid", () => {
+            expect(subject().valid).to.equal(false);
+          });
+
+          describe("default message", () => {
+            it("sets error message to 'is too long (Max is 5)'", () => {
+              expect(subject().errors).to.deep.equal([ "is too long (Max is 5)" ]);
+            });
+          });
+
+          describe("custom message", () => {
+            beforeEach(() => { validate = Validators.length({ min: 3, max: 5 }, { maxMessage: "smaller than ${max} please" }); });
+
+            it("sets error message to the custom message", () => {
+              expect(subject().errors).to.deep.equal([ "smaller than 5 please" ]);
+            });
+          });
+        });
+      });
+    });
+
     describe("bigger than length", () => {
       beforeEach(() => { obj = { value: 'aaaaaa', valid: true, errors: [] }; });
 
@@ -228,13 +330,13 @@ describe("Validators", () => {
       });
 
       describe("default message", () => {
-        it("sets error message to 'is too long (Max is 5)d'", () => {
+        it("sets error message to 'is too long (Max is 5)'", () => {
           expect(subject().errors).to.deep.equal([ "is too long (Max is 5)" ]);
         });
       });
 
       describe("custom message", () => {
-        beforeEach(() => { validate = Validators.length(5, { message: "less than ${len} please" }); });
+        beforeEach(() => { validate = Validators.length(5, { maxMessage: "less than ${len} please" }); });
 
         it("sets error message to the custom message", () => {
           expect(subject().errors).to.deep.equal([ "less than 5 please" ]);
