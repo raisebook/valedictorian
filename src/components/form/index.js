@@ -23,9 +23,11 @@ export default class Form extends React.Component {
           this.components = this.components.filter((c) => { return c !== component; });
         }),
 
-        hasValidated: (() => {
+        validate: (() => {
+          let valid = this.components.reduce((acc, component) => { return acc && component.validate().valid; }, true);
+
           this.setState({
-            valid: this.components.reduce((acc, component) => { return acc && component.valid(); }, true)
+            valid: valid
           });
         }),
 
