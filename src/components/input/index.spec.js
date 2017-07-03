@@ -103,10 +103,11 @@ describe('<Input>', () => {
   });
 
   describe("validate", () => {
-    let validator, state;
+    let validator, state, setState;
 
     beforeEach(() => {
       component = new Input({});
+      setState = sinon.stub(component, 'setState');
 
       state = { valid: false, beenValid: false };
 
@@ -130,6 +131,11 @@ describe('<Input>', () => {
     it("called validate on the validator object", () => {
       component.validate();
       expect(validator).to.have.been.calledWith(component.state);
+    });
+
+    it("sets the state", () => {
+      component.validate();
+      expect(setState).to.have.been.calledWith(state);
     });
 
     it("calls onValidate", () => {

@@ -5,6 +5,7 @@ describe("Validators", () => {
   let validate, obj, options, result;
 
   let subject = () => {
+    obj = Object.assign({}, { beenValid: false }, obj);
     return validate(obj);
   };
 
@@ -32,26 +33,26 @@ describe("Validators", () => {
     describe("beenValid", () => {
       it("sets beenValid to true if it first evals to false", () => {
         let validator = setup();
-        let obj = validator(failVal);
+        let obj = validator(Object.assign({}, { beenValid: false }, failVal));
         expect(obj.beenValid).to.equal(false);
       });
 
       it("sets beenValid to true if it evals to true", () => {
         let validator = setup();
-        let obj = validator(failVal);
+        let obj = validator(Object.assign({}, { beenValid: false }, failVal));
         expect(obj.beenValid).to.equal(false);
         obj = validator(Object.assign({}, obj, passVal));
         expect(obj.beenValid).to.equal(true);
       });
 
       it("does not set beenValid to false if it re-evals to false", () => {
-         let validator = setup();
-        let obj = validator(failVal);
+        let validator = setup();
+        let obj = validator(Object.assign({}, { beenValid: false }, failVal));
         expect(obj.beenValid).to.equal(false);
         obj = validator(Object.assign({}, obj, passVal));
         expect(obj.beenValid).to.equal(true);
         obj = validator(Object.assign({}, obj, failVal));
-         expect(obj.beenValid).to.equal(true);
+        expect(obj.beenValid).to.equal(true);
       });
     });
   }

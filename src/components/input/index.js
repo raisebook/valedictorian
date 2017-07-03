@@ -36,6 +36,8 @@ export default class Input extends React.Component {
   validate() {
     let newState = this.validator.validate(this.state);
 
+    this.setState(newState);
+
     if(this.props.onValidate) {
       this.props.onValidate(newState);
     }

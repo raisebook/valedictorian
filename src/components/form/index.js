@@ -14,6 +14,10 @@ export default class Form extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.getChildContext().validation.validate();
+  }
+
   getChildContext() {
     return {
       validation: {
