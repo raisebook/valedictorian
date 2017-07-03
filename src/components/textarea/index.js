@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import ValidatableInput from "../validatable-input";
 
-export default class Input extends ValidatableInput {
+export default class Textarea extends ValidatableInput {
   render() {
     let props = Object.assign({}, this.props, {
       onChange: this.update()
@@ -12,11 +12,11 @@ export default class Input extends ValidatableInput {
     delete props["initial"];
 
     return (
-      <input {...props} />
+      <textarea {...props}>{this.props.children}</textarea>
     );
   }
 }
 
-Input.contextTypes = {
+Textarea.contextTypes = {
   validation: PropTypes.object
 };

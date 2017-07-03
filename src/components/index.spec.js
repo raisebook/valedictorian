@@ -1,5 +1,5 @@
 import Component from './';
-import { Button, Form, Input, Select, InlineError } from './';
+import { Button, Form, Input, Select, Textarea, InlineError } from './';
 
 describe("exports", () => {
   describe("default export", () => {
@@ -23,6 +23,10 @@ describe("exports", () => {
       expect(Component.Select).to.not.be.undefined;
     });
 
+    it("has a Textarea", () => {
+      expect(Component.Textarea).to.not.be.undefined;
+    });
+
     it("has an InlineError", () => {
       expect(Component.InlineError).to.not.be.undefined;
     });
@@ -43,6 +47,10 @@ describe("exports", () => {
 
     it("has an Select", () => {
       expect(Select).to.not.be.undefined;
+    });
+
+    it("has a Textarea", () => {
+      expect(Textarea).to.not.be.undefined;
     });
 
     it("has an InlineError", () => {
