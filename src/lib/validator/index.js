@@ -16,10 +16,6 @@ function validate(body, options = {}) {
       value: (obj.value + "").trim()
     });
 
-    if(typeof(obj.beenValid) == "undefined") {
-      obj.beenValid = false;
-    }
-
     let ret = body(obj);
 
     if(ret.valid) {
@@ -142,9 +138,17 @@ export default class Validator {
   }
 
   validate(obj) {
-    obj = Object.assign({}, obj);
-    obj.valid = true;
-    obj.errors = [];
+    obj = Object.assign(
+      {},
+      {
+        beenValid: false
+      },
+      obj,
+      {
+        valid: true,
+        errors: []
+      }
+    );
 
     return this.validators.reduce((obj, validator) => { return validator(obj); }, obj);
   }

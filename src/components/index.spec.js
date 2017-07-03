@@ -1,5 +1,5 @@
 import Component from './';
-import { Button, Form, Input } from './';
+import { Button, Form, Input, InlineError } from './';
 
 describe("exports", () => {
   describe("default export", () => {
@@ -18,6 +18,10 @@ describe("exports", () => {
     it("has a Input", () => {
       expect(Component.Input).to.not.be.undefined;
     });
+
+    it("has a InlineError", () => {
+      expect(Component.InlineError).to.not.be.undefined;
+    });
   })
 
   describe("exports", () => {
@@ -29,8 +33,12 @@ describe("exports", () => {
       expect(Form).to.not.be.undefined;
     });
 
-    it("has a Input", () => {
+    it("has an Input", () => {
       expect(Input).to.not.be.undefined;
+    });
+
+    it("has an InlineError", () => {
+      expect(InlineError).to.not.be.undefined;
     });
   });
 });

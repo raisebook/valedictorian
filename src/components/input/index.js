@@ -33,33 +33,31 @@ export default class Input extends React.Component {
     }
   }
 
-  validate(state) {
-    let newState = this.validator.validate(Object.assign({}, this.state, state));
+  validate() {
+    let newState = this.validator.validate(this.state);
 
-    if(this.context.validation) {
-      this.setState(newState, () => {
-        // Wait for the state to update, then notify the form context
-        this.context.validation.hasValidated(this);
-      });
-    }
+    this.setState(newState);
 
     if(this.props.onValidate) {
-      this.props.onValidate({
-        valid: newState.valid,
-        errors: newState.errors
-      });
+      this.props.onValidate(newState);
     }
-  }
 
-  valid() {
-    return this.validator.validate(this.state).valid;
+    return newState;
   }
 
   update() {
     let context = this;
 
     return function(e) {
-      context.validate({ value: e.target.value, changed: true });
+      let state = { value: e.target.value, changed: true };
+      context.setState(state, () => {
+        // If part of a validation group, let the parent call validate
+        if(context.context.validation) {
+          context.context.validation.validate();
+        } else {
+          context.validate();
+        }
+      });
 
       if(context.props.onChange) {
         context.props.onChange.apply(this, arguments);
