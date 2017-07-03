@@ -103,57 +103,87 @@ describe('<Input>', () => {
   });
 
   describe("validate", () => {
-
-  });
-
-  describe("valid", () => {
-    let validator, state;
+    let validator, state, setState;
 
     beforeEach(() => {
       component = new Input({});
+      setState = sinon.stub(component, 'setState');
+
+      state = { valid: false, beenValid: false };
 
       validator = sinon.stub(component.validator, 'validate');
-      validator.returns({ valid: false });
+      validator.returns(state);
 
-      state = sinon.stub();
-      component.state = state;
+      component.state = {
+        value: "",
+        changed: true
+      };
     });
 
     afterEach(() => {
       validator.restore();
     });
 
-    it("returns whether the component is valid or not", () => {
-      expect(component.valid()).to.equal(false);
+    it("returns the state", () => {
+      expect(component.validate()).to.equal(state);
     });
 
     it("called validate on the validator object", () => {
-      component.valid();
-      expect(validator).to.have.been.calledWith(state);
+      component.validate();
+      expect(validator).to.have.been.calledWith(component.state);
+    });
+
+    it("sets the state", () => {
+      component.validate();
+      expect(setState).to.have.been.calledWith(state);
+    });
+
+    it("calls onValidate", () => {
+      component.props.onValidate = sinon.stub();
+      component.validate();
+      expect(component.props.onValidate).to.have.been.calledWith(state);
     });
   });
 
   describe("update", () => {
+    let el;
     beforeEach(() => {
-      component = new Input({});
+      el = mount(<Input />);
+      component = el.instance();
     });
 
     it("returns a function", () => {
       expect(typeof(component.update())).to.equal("function");
     });
 
-    it("calls validate", () => {
-      let stub = sinon.stub(component, 'validate');
-      let args = {
-        target: {
-          value: 'value'
-        }
-      };
+    describe("with context", () => {
+      let context;
+      beforeEach(() => {
+        context = {
+          validation: {
+            validate: sinon.stub(),
+            register: sinon.stub(),
+            unregister: sinon.stub()
+          }
+        };
 
-      component.update()(args);
-      expect(stub).to.have.been.calledWith({ value: 'value', changed: true });
-      stub.restore();
-    })
+        el = mount(<Input />, { context: context });
+        component = el.instance();
+      });
+
+      it("calls the context validator", () => {
+        el.simulate('change', { target: { value: '' } });
+        expect(context.validation.validate).to.have.been.called;
+      });
+    });
+
+    describe("without context", () => {
+      it("calls validate", () => {
+        let spy = sinon.spy(component, 'validate');
+        el.simulate('change', { target: { value: '' } });
+        expect(spy).to.have.been.called;
+      });
+    });
 
     describe("onChange is set", () => {
       let props;
