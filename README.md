@@ -20,7 +20,7 @@ Input: Outputs an input field. Takes all the props a normal input can, as well
 import React from "react";
 
 import { Validation } from "valedictorian";
-import { Input, Button, Form } from "valedictorian/components";
+import { Input, Select, Button, Form } from "valedictorian/components";
 
 class App extends React.Component {
   render() {
@@ -28,6 +28,9 @@ class App extends React.Component {
       <Form className={styles.container}>
         <label for="name">Name</label>
         <Input id="name" type="text" placeholder="Name" validators={[ Validation.required() ]} />
+        <Select>
+          <option value="foo">Foo</option>
+        </Select>
         <Button className={styles.button}>Save</Button>
       </Form>
     );
