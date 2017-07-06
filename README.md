@@ -20,7 +20,7 @@ Input: Outputs an input field. Takes all the props a normal input can, as well
 import React from "react";
 
 import { Validation } from "valedictorian";
-import { Input, Select, Button, Form } from "valedictorian/components";
+import { Input, Checkbox, Select, Button, Form } from "valedictorian/components";
 
 class App extends React.Component {
   render() {
@@ -28,6 +28,8 @@ class App extends React.Component {
       <Form className={styles.container}>
         <label for="name">Name</label>
         <Input id="name" type="text" placeholder="Name" validators={[ Validation.required() ]} />
+        <Checkbox id="awesome" checkedValue="Awesome" uncheckedValue="Not Awesome" value="Not Awesome" />
+        <label for="awesome">Awesome</label>
         <Select>
           <option value="foo">Foo</option>
         </Select>
@@ -72,7 +74,7 @@ class App extends React.Component {
 
 ### Validation.required([options])
 
-Validates true once a valud has been entered
+Validates true once a valid has been entered
 
 #### Options:
 
@@ -82,6 +84,38 @@ message: A custom message to set when validation fails
 
 ```javascript
 <Input id="name" type="text" placeholder="Name" validators={[ Validator.required() ]} />
+```
+
+### Validation.equal(value, [options])
+
+Validates true if the value of the input is the same as the supplied value. Useful for validating checkboxes, or comparing two inputs
+
+NOTE: The input value is trimmed before testing.
+
+#### Options:
+
+message: A custom message to set when validation fails
+
+#### Example
+
+```javascript
+<Checkbox id="accept" checkValue="true" uncheckedValue="false" type="text" validators={[ Validator.equal("true") ]} />
+```
+
+### Validation.notEqual(value, [options])
+
+Validates true if the value of the input is not the same as the supplied value. Useful for validating checkboxes, or comparing two inputs
+
+NOTE: The input value is trimmed before testing.
+
+#### Options:
+
+message: A custom message to set when validation fails
+
+#### Example
+
+```javascript
+<Checkbox id="accept" checkValue="true" uncheckedValue="false" type="text" validators={[ Validator.notEqual("false") ]} />
 ```
 
 ### Validation.format(RegExp, [options])

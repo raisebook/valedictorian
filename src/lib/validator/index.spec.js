@@ -125,6 +125,118 @@ describe("Validators", () => {
     });
   });
 
+  describe("equal", () => {
+    beforeEach(() => { validate = Validators.equal('a'); });
+
+    isAValidator(
+      (options) => Validators.equal('a', options),
+      { value: 'a', valid: true, errors: [] },
+      { value: 'b', valid: true, errors: [] }
+    );
+
+    describe("not equal", () => {
+      beforeEach(() => { obj = { value: 'b', valid: true, errors: [] }; });
+
+      it("evaluates to not valid", () => {
+        expect(subject().valid).to.equal(false);
+      });
+
+      describe("default message", () => {
+        it("sets error message to 'is not equal'", () => {
+          expect(subject().errors).to.deep.equal([ "is not equal" ]);
+        });
+      });
+
+      describe("custom message", () => {
+        beforeEach(() => { validate = Validators.equal('a', { message: "must be equal" }); });
+
+        it("sets error message to the custom message", () => {
+          expect(subject().errors).to.deep.equal([ "must be equal" ]);
+        });
+      });
+    });
+
+    describe("equal", () => {
+      beforeEach(() => { obj = { value: 'a', valid: true, errors: [] }; });
+
+      it("evaluates to valid", () => {
+        expect(subject().valid).to.equal(true);
+      });
+
+      it("sets error message to null", () => {
+        expect(subject().errors).to.deep.equal([]);
+      });
+    });
+
+    describe("already invalid", () => {
+      beforeEach(() => { obj = { value: 'a' , valid: false, errors: [ "invalid" ] }; });
+
+      it("evaluates to not valid", () => {
+        expect(subject().valid).to.equal(false);
+      });
+
+      it("sets error message to is required", () => {
+        expect(subject().errors).to.deep.equal([ "invalid" ]);
+      });
+    });
+  });
+
+  describe("notEqual", () => {
+    beforeEach(() => { validate = Validators.notEqual('b'); });
+
+    isAValidator(
+      (options) => Validators.notEqual('b', options),
+      { value: 'a', valid: true, errors: [] },
+      { value: 'b', valid: true, errors: [] }
+    );
+
+    describe("equal", () => {
+      beforeEach(() => { obj = { value: 'b', valid: true, errors: [] }; });
+
+      it("evaluates to not valid", () => {
+        expect(subject().valid).to.equal(false);
+      });
+
+      describe("default message", () => {
+        it("sets error message to 'is equal'", () => {
+          expect(subject().errors).to.deep.equal([ "is equal" ]);
+        });
+      });
+
+      describe("custom message", () => {
+        beforeEach(() => { validate = Validators.notEqual('b', { message: "must be not equal" }); });
+
+        it("sets error message to the custom message", () => {
+          expect(subject().errors).to.deep.equal([ "must be not equal" ]);
+        });
+      });
+    });
+
+    describe("not equal", () => {
+      beforeEach(() => { obj = { value: 'a', valid: true, errors: [] }; });
+
+      it("evaluates to valid", () => {
+        expect(subject().valid).to.equal(true);
+      });
+
+      it("sets error message to null", () => {
+        expect(subject().errors).to.deep.equal([]);
+      });
+    });
+
+    describe("already invalid", () => {
+      beforeEach(() => { obj = { value: 'a' , valid: false, errors: [ "invalid" ] }; });
+
+      it("evaluates to not valid", () => {
+        expect(subject().valid).to.equal(false);
+      });
+
+      it("sets error message to is required", () => {
+        expect(subject().errors).to.deep.equal([ "invalid" ]);
+      });
+    });
+  });
+
   describe("format", () => {
     beforeEach(() => { validate = Validators.format(/[a-z]+/); });
 

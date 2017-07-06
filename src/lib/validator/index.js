@@ -41,6 +41,36 @@ export function required(options = {}) {
   }, options);
 }
 
+export function equal(value, options = {}) {
+  options = Object.assign({}, {
+    message: "is not equal"
+  }, options);
+
+  return validate(function(obj) {
+    if(obj.value !== value.trim()) {
+      obj.valid = false;
+      obj.errors.push(options.message);
+    }
+
+    return obj;
+  }, options);
+}
+
+export function notEqual(value, options = {}) {
+  options = Object.assign({}, {
+    message: "is equal"
+  }, options);
+
+  return validate(function(obj) {
+    if(obj.value === value.trim()) {
+      obj.valid = false;
+      obj.errors.push(options.message);
+    }
+
+    return obj;
+  }, options);
+}
+
 export function format(regexp, options = {}) {
   options = Object.assign({}, {
     allowEmpty: false,

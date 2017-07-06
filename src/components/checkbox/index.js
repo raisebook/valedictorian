@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import ValidatableInput from "../validatable-input";
 
-export default class Input extends ValidatableInput {
+export default class Checkbox extends ValidatableInput {
   constructor(props) {
     super(props);
 
@@ -56,11 +56,11 @@ export default class Input extends ValidatableInput {
   }
 }
 
-Input.contextTypes = {
+Checkbox.contextTypes = {
   validation: PropTypes.object
 };
 
-Input.propTypes = {
+Checkbox.propTypes = {
   checkedValue: PropTypes.string.isRequired,
   uncheckedValue: PropTypes.string.isRequired
 }
