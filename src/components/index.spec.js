@@ -1,5 +1,5 @@
 import Component from './';
-import { Button, Form, Input, Select, Textarea, InlineError } from './';
+import { Button, Checkbox, Form, Input, Select, Textarea, InlineError } from './';
 
 describe("exports", () => {
   describe("default export", () => {
@@ -9,6 +9,10 @@ describe("exports", () => {
 
     it("has a Button", () => {
       expect(Component.Button).to.not.be.undefined;
+    });
+
+    it("has a Checkbox", () => {
+      expect(Component.Checkbox).to.not.be.undefined;
     });
 
     it("has a Form", () => {
@@ -35,6 +39,10 @@ describe("exports", () => {
   describe("exports", () => {
     it("has a Button", () => {
       expect(Button).to.not.be.undefined;
+    });
+
+    it("has a Checkbox", () => {
+      expect(Checkbox).to.not.be.undefined;
     });
 
     it("has a Form", () => {

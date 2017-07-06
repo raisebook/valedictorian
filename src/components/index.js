@@ -1,4 +1,5 @@
 import Button from './button';
+import Checkbox from './checkbox';
 import Form from './form';
 import Input from './input';
 import Select from './select';
@@ -7,6 +8,7 @@ import InlineError from './inline-error';
 
 export {
   Button,
+  Checkbox,
   Form,
   Input,
   Select,
@@ -16,6 +18,7 @@ export {
 
 export default {
   Button,
+  Checkbox,
   Form,
   Input,
   Select,
