@@ -237,6 +237,64 @@ describe("Validators", () => {
     });
   });
 
+  describe("evaluate", () => {
+    let retTrue = (val) => { return val === "true" };
+    let retFalse = (val) => { return val === "false"; };
+    beforeEach(() => { validate = Validators.evaluate(retTrue); });
+
+    isAValidator(
+      (options) => Validators.evaluate(retTrue, options),
+      { value: "true", valid: true, errors: [] },
+      { value: "false", valid: true, errors: [] }
+    );
+
+    describe("evaluates to false", () => {
+      beforeEach(() => { obj = { value: "false", valid: true, errors: [] }; });
+
+      it("evaluates to not valid", () => {
+        expect(subject().valid).to.equal(false);
+      });
+
+      describe("default message", () => {
+        it("sets error message to 'is not valid'", () => {
+          expect(subject().errors).to.deep.equal([ "is not valid" ]);
+        });
+      });
+
+      describe("custom message", () => {
+        beforeEach(() => { validate = Validators.evaluate(retTrue, { message: "must be true" }); });
+
+        it("sets error message to the custom message", () => {
+          expect(subject().errors).to.deep.equal([ "must be true" ]);
+        });
+      });
+    });
+
+    describe("evaluates to true", () => {
+      beforeEach(() => { obj = { value: "true", valid: true, errors: [] }; });
+
+      it("evaluates to valid", () => {
+        expect(subject().valid).to.equal(true);
+      });
+
+      it("sets error message to null", () => {
+        expect(subject().errors).to.deep.equal([]);
+      });
+    });
+
+    describe("already invalid", () => {
+      beforeEach(() => { obj = { value: "true" , valid: false, errors: [ "invalid" ] }; });
+
+      it("evaluates to not valid", () => {
+        expect(subject().valid).to.equal(false);
+      });
+
+      it("sets error message to is required", () => {
+        expect(subject().errors).to.deep.equal([ "invalid" ]);
+      });
+    });
+  });
+
   describe("format", () => {
     beforeEach(() => { validate = Validators.format(/[a-z]+/); });
 

@@ -71,6 +71,21 @@ export function notEqual(value, options = {}) {
   }, options);
 }
 
+export function evaluate(func, options = {}) {
+  options = Object.assign({}, {
+    message: "is not valid"
+  }, options);
+
+  return validate(function(obj) {
+    if(!func(obj.value)) {
+      obj.valid = false;
+      obj.errors.push(options.message);
+    }
+
+    return obj;
+  }, options);
+}
+
 export function format(regexp, options = {}) {
   options = Object.assign({}, {
     allowEmpty: false,

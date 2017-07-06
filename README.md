@@ -104,7 +104,7 @@ message: A custom message to set when validation fails
 
 ### Validation.notEqual(value, [options])
 
-Validates true if the value of the input is not the same as the supplied value. Useful for validating checkboxes, or comparing two inputs
+Validates true if the value of the input is not the same as the supplied value. Useful for validating checkboxes.
 
 NOTE: The input value is trimmed before testing.
 
@@ -131,6 +131,23 @@ allowEmpty: (true|false) If true, the validator will not run on empty inputs.
 
 ```javascript
 <Input id="name" type="text" placeholder="Name" validators={[ Validator.format(/[a-z]+/) ]} />
+```
+
+### Validation.evaluate(function, [options])
+
+Validates true passed in function evaluates to true when passed the value of the input. Useful for testing confirmation of passwords.
+
+NOTE: The input value is trimmed before invoking the function.
+
+#### Options:
+
+message: A custom message to set when validation fails
+
+#### Example
+
+```javascript
+<Input type="password" value={this.state.password} onChange={(e) => { this.setState('password', e.target.value); } } />
+<Input type="password" validators={[ Validator.evaluate((val) => { val == this.state.password }) ]} value={this.state.passwordConfirm} onChange={(e) => { this.setState('passwordConfirm', e.target.value); } } />
 ```
 
 ### Validation.length(len, [options])
