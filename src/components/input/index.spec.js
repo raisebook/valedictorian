@@ -226,6 +226,18 @@ describe('<Input>', () => {
       expect(enzymeWrapper.find("input").props().validators).to.be.undefined;
     });
 
+    it("inserts ref from inputRef", () => {
+      let ref = null;
+      mount(<Input type="text" inputRef={(input) => {ref = input}} validators={[]} />);
+      expect(ref).to.not.be.null;
+    });
+
+    it("removes inputRef", () => {
+      enzymeWrapper = shallow(<Input type="text" inputRef={() => {}} validators={[]} />);
+      component = enzymeWrapper.instance();
+      expect(enzymeWrapper.find("input").props().inputRef).to.be.undefined;
+    });
+
     it("rebinds onChange with the update method", () => {
       let mock = sinon.stub();
       let update = sinon.stub(Input.prototype, 'update');

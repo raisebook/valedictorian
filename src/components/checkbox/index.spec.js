@@ -256,6 +256,18 @@ describe('<Checkbox>', () => {
       expect(enzymeWrapper.find("input[type=\"checkbox\"]").prop('initial')).to.be.undefined;
     });
 
+    it("inserts ref from inputRef", () => {
+      let ref = null;
+      mount(<Checkbox initial="b" checkedValue="a" uncheckedValue="b" inputRef={(input) => {ref = input}} validators={[]} />);
+      expect(ref).to.not.be.null;
+    });
+
+    it("removes inputRef", () => {
+      enzymeWrapper = shallow(<Checkbox initial="b" validators={[]} checkedValue="a" uncheckedValue="b" inputRef={() => {}} />);
+      component = enzymeWrapper.instance();
+      expect(enzymeWrapper.find("input").props().inputRef).to.be.undefined;
+    });
+
     it("renders the value from the state, not the props", () => {
       enzymeWrapper = shallow(<Checkbox value="b" validators={[]} checkedValue="a" uncheckedValue="b" />);
       component = enzymeWrapper.instance();

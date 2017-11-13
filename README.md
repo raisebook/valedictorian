@@ -70,6 +70,42 @@ class App extends React.Component {
 }
 ```
 
+## Refs
+
+From the [React docs](https://reactjs.org/docs/refs-and-the-dom.html):
+
+> There are a few good use cases for refs:
+> * Managing focus, text selection, or media playback.
+> * Triggering imperative animations.
+> * Integrating with third-party DOM libraries.
+
+Because of how React works, you need to use the inputRef property when using a valedictorian component.
+
+```javascript
+import React from "react";
+
+import { Validation } from "valedictorian";
+import { Input, Button, Form, InlineError } from "valedictorian/components";
+
+class App extends React.Component {
+  focus() {
+    this.input.focus();
+  }
+
+  render() {
+    return (
+      <Form className={styles.container}>
+        <label for="name">Name</label>
+        <InlineError for="name" />
+        <a href="#" onClick={this.focus.bind(this)}>Focus Input</a>
+        <Input id="name" name="name" type="text" placeholder="Name" validators={[ Validation.required() ]} inputRef={(input) => { this.input = input; }} />
+        <Button className={styles.button}>Save</Button>
+      </Form>
+    );
+  }
+}
+```
+
 ## Validation types
 
 ### Validation.required([options])

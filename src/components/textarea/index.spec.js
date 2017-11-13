@@ -226,6 +226,18 @@ describe('<Textarea>', () => {
       expect(enzymeWrapper.find("textarea").props().validators).to.be.undefined;
     });
 
+    it("inserts ref from inputRef", () => {
+      let ref = null;
+      mount(<Textarea type="text" inputRef={(input) => {ref = input}} validators={[]}></Textarea>);
+      expect(ref).to.not.be.null;
+    });
+
+    it("removes inputRef", () => {
+      enzymeWrapper = shallow(<Textarea type="text" inputRef={() => {}} validators={[]}></Textarea>);
+      component = enzymeWrapper.instance();
+      expect(enzymeWrapper.find("textarea").props().inputRef).to.be.undefined;
+    });
+
     it("rebinds onChange with the update method", () => {
       let mock = sinon.stub();
       let update = sinon.stub(Textarea.prototype, 'update');

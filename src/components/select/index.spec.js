@@ -232,6 +232,18 @@ describe('<Select>', () => {
       expect(enzymeWrapper.find("select").props().validators).to.be.undefined;
     });
 
+    it("inserts ref from inputRef", () => {
+      let ref = null;
+      mount(<Select name="test" validators={[]} inputRef={(input) => {ref = input}}><option value="foo">Foo</option></Select>);
+      expect(ref).to.not.be.null;
+    });
+
+    it("removes inputRef", () => {
+      enzymeWrapper = shallow(<Select name="test" validators={[]} inputRef={() => {}}><option value="foo">Foo</option></Select>);
+      component = enzymeWrapper.instance();
+      expect(enzymeWrapper.find("select").props().inputRef).to.be.undefined;
+    });
+
     it("rebinds onChange with the update method", () => {
       let mock = sinon.stub();
       let update = sinon.stub(Select.prototype, 'update');

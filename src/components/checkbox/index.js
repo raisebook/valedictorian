@@ -38,7 +38,8 @@ export default class Checkbox extends ValidatableInput {
 
   render() {
     let props = Object.assign({}, this.props, {
-      onChange: this.update()
+      onChange: this.update(),
+      ref: this.props.inputRef
     });
 
     let value = this.state.checked ? this.props.checkedValue : this.props.uncheckedValue;
@@ -49,6 +50,7 @@ export default class Checkbox extends ValidatableInput {
     delete props["uncheckedValue"];
     delete props["checkedValue"];
     delete props["value"];
+    delete props["inputRef"];
 
     return (
       <input type="checkbox" checked={this.state.checked} value={this.state.value} {...props} />
