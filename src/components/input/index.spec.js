@@ -67,7 +67,7 @@ describe('<Input>', () => {
       });
 
       describe("with validators", () => {
-        let validators = [ function() {} ];
+        let validators = [ function(obj) { return(obj) } ];
         beforeEach(() => { props = { validators: validators } });
 
         it("initializes the validator object with the supplied validators", () => {

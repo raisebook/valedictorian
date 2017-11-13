@@ -67,7 +67,7 @@ describe('<Checkbox>', () => {
       });
 
       describe("with validators", () => {
-        let validators = [ function() {} ];
+        let validators = [ function(obj) { return(obj) } ];
         beforeEach(() => { props = { validators: validators, checkedValue: 'a', uncheckedValue: 'b' } });
 
         it("initializes the validator object with the supplied validators", () => {

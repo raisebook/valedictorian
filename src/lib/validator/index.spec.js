@@ -29,32 +29,6 @@ describe("Validators", () => {
         expect(setup({ unless: () => true })(failVal).valid).to.equal(true);
       });
     });
-
-    describe("beenValid", () => {
-      it("sets beenValid to true if it first evals to false", () => {
-        let validator = setup();
-        let obj = validator(Object.assign({}, { beenValid: false }, failVal));
-        expect(obj.beenValid).to.equal(false);
-      });
-
-      it("sets beenValid to true if it evals to true", () => {
-        let validator = setup();
-        let obj = validator(Object.assign({}, { beenValid: false }, failVal));
-        expect(obj.beenValid).to.equal(false);
-        obj = validator(Object.assign({}, obj, passVal));
-        expect(obj.beenValid).to.equal(true);
-      });
-
-      it("does not set beenValid to false if it re-evals to false", () => {
-        let validator = setup();
-        let obj = validator(Object.assign({}, { beenValid: false }, failVal));
-        expect(obj.beenValid).to.equal(false);
-        obj = validator(Object.assign({}, obj, passVal));
-        expect(obj.beenValid).to.equal(true);
-        obj = validator(Object.assign({}, obj, failVal));
-        expect(obj.beenValid).to.equal(true);
-      });
-    });
   }
 
   describe("required", () => {
@@ -833,6 +807,22 @@ describe("Validator", () => {
     it("has an empty errors object", () => {
       expect(subject().errors).to.deep.equal([]);
     });
+
+    it("beenValid should be true", () => {
+      expect(subject().beenValid).to.equal(true);
+    });
+
+    describe("was invalid", () => {
+      it("beenValid should be true", () => {
+        expect(subject({beenValid: false}).beenValid).to.equal(true);
+      });
+    });
+
+    describe("was valid", () => {
+      it("beenValid should be true", () => {
+        expect(subject({beenValid: true}).beenValid).to.equal(true);
+      });
+    });
   });
 
   describe("invalid followed by a valid", () => {
@@ -844,6 +834,23 @@ describe("Validator", () => {
 
     it("has an error entry for each failing validator", () => {
       expect(subject().errors).to.deep.equal([ "is invalid" ]);
+    });
+
+    it("beenValid should be false", () => {
+      let results = subject();
+      expect(subject().beenValid).to.equal(false);
+    });
+
+    describe("was invalid", () => {
+      it("beenValid should be false", () => {
+        expect(subject({beenValid: false}).beenValid).to.equal(false);
+      });
+    });
+
+    describe("was valid", () => {
+      it("beenValid should be true", () => {
+        expect(subject({beenValid: true}).beenValid).to.equal(true);
+      });
     });
   });
 
@@ -857,6 +864,23 @@ describe("Validator", () => {
     it("has an error entry for each failing validator", () => {
       expect(subject().errors).to.deep.equal([ "is invalid" ]);
     });
+
+    it("beenValid should be false", () => {
+      let results = subject();
+      expect(subject().beenValid).to.equal(false);
+    });
+
+    describe("was invalid", () => {
+      it("beenValid should be false", () => {
+        expect(subject({beenValid: false}).beenValid).to.equal(false);
+      });
+    });
+
+    describe("was valid", () => {
+      it("beenValid should be true", () => {
+        expect(subject({beenValid: true}).beenValid).to.equal(true);
+      });
+    });
   });
 
   describe("all invalid", () => {
@@ -868,6 +892,22 @@ describe("Validator", () => {
 
     it("has an error entry for each failing validator", () => {
       expect(subject().errors).to.deep.equal([ "is invalid", "is invalid", "is invalid" ]);
+    });
+
+    it("beenValid should be false", () => {
+      expect(subject().beenValid).to.equal(false);
+    });
+
+    describe("was invalid", () => {
+      it("beenValid should be false", () => {
+        expect(subject({beenValid: false}).beenValid).to.equal(false);
+      });
+    });
+
+    describe("was valid", () => {
+      it("beenValid should be true", () => {
+        expect(subject({beenValid: true}).beenValid).to.equal(true);
+      });
     });
   });
 });

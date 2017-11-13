@@ -16,13 +16,7 @@ function validate(body, options = {}) {
       value: (obj.value + "").trim()
     });
 
-    let ret = body(obj);
-
-    if(ret.valid) {
-      ret.beenValid = true;
-    }
-
-    return ret;
+    return body(obj);
   };
 }
 
@@ -195,6 +189,12 @@ export default class Validator {
       }
     );
 
-    return this.validators.reduce((obj, validator) => { return validator(obj); }, obj);
+    let result = this.validators.reduce((obj, validator) => { return validator(obj); }, obj);
+
+    if(result.valid) {
+      result.beenValid = true;
+    }
+
+    return result;
   }
 }
